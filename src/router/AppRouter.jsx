@@ -39,6 +39,7 @@ export default function AppRouter() {
           }
         >
           <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
 
