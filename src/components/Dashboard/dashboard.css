@@ -1,0 +1,15 @@
+.search-filter {
+	display: flex;
+	align-items: center;
+	width: 40%;
+}
+
+.main-table {
+	width: 100%;
+}
+
+.container {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+}
