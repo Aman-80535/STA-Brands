@@ -1,3 +1,4 @@
+import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase"; // your firebase init file
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 
@@ -33,4 +34,18 @@ export const updateOrder = async (id, data) => {
 export const deleteOrder = async (id) => {
   const orderRef = doc(db, "orders", id);
   await deleteDoc(orderRef);
+};
+
+
+export const getBatchedOrders = async () => {
+  // sort by "date" (descending → latest first)
+  const q = query(
+    collection(db, "batches"),
+    orderBy("created_at", "desc")
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 };

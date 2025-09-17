@@ -1,6 +1,7 @@
 export const navLinks = [
-  { label: "Home", path: "/admin/dashboard" },
+  { label: "Home", path: "/" },
   { label: "Analytics", path: "/analytics" },
+  { label: "Add New Product", path: "/add-product" },
 ]
 
 

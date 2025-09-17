@@ -8,6 +8,12 @@
 	width: 100%;
 }
 
+.main-table tbody td, th{
+	align-items: center;
+	text-align: center;
+	justify-items: center;
+}
+
 .container {
 	align-items: center;
 	display: flex;

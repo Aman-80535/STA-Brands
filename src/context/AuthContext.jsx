@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
         setUser(firebaseUser);
 
         // Fetch role from Firestore "users" collection
-        const docRef = doc(db, "employees", firebaseUser.uid);
+        const docRef = doc(db, "users", firebaseUser.uid);
         const snap = await getDoc(docRef);
         if (snap.exists()) {
           setRole(snap.data().role || "user");
@@ -32,7 +32,6 @@ export const AuthProvider = ({ children }) => {
       }
       setLoading(false);
     });
-
     return () => unsubscribe();
   }, []);
 
