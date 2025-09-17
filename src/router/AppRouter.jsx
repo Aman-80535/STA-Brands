@@ -1,7 +1,7 @@
-// src/router/AppRouter.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute";
-// import NotFound from "../pages/NotFound";
+import RoleRedirect from "./RoleRedirect";
+
 import EmployeeLayout from "../components/layouts/EmployeeLayout";
 import AdminLayout from "../components/layouts/AdminLayout";
 import Dashboard from "../components/Dashboard";
@@ -10,45 +10,52 @@ import NewEmployeePage from "../components/NewEmployee";
 import LoginForm from "../components/Auth/LoginForm";
 import AddProduct from "../components/AddProduct";
 import ViewProduct from "../components/ViewProduct";
+import { useAuth } from "../context/AuthContext"; // ✅ correct path
 
 export default function AppRouter() {
+    const { user } = useAuth();
+
   return (
     <BrowserRouter>
       <Routes>
-        {/* Guest Routes */}
-        {/* <Route element={<GuestLayout />}> */}
+        {/* Public */}
         <Route path="/login" element={<LoginForm />} />
-        {/* </Route> */}
 
-        {/*  Manufacturer Routes */}
-        <Route
-          element={
-            <ProtectedRoute roles={["manufacturer"]}>
-              <EmployeeLayout />
-            </ProtectedRoute>
-          }
-        >
-          {/* <Route path="/profile" element={<Profile />} /> */}
-          {/* <Route path="/" element={<Dashboard />} /> */}
-        </Route>
+        {/* Role-based redirect on root */}
+        <Route path="/" element={<RoleRedirect />} />
 
-        {/* Admin Routes */}
+        {/* Admin routes */}
         <Route
+          path="/admin"
           element={
             <ProtectedRoute roles={["admin"]}>
               <AdminLayout />
             </ProtectedRoute>
           }
         >
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/view-product/:id" element={<ViewProduct />} />
-          <Route path="/add-product" element={<AddProduct />} />
-          <Route path="/admin/new-user" element={<NewEmployeePage />} />
-          <Route path="/analytics" element={<Analytics />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="view-product/:id" element={<ViewProduct />} />
+          <Route path="add-product" element={<AddProduct />} />
+          <Route path="new-user" element={<NewEmployeePage />} />
+          <Route path="analytics" element={<Analytics />} />
         </Route>
 
-        {/* Fallback */}
-        {/* <Route path="*" element={<NotFound />} /> */}
+        {/* Manufacturer routes */}
+        <Route
+          path="/manufacturer"
+          element={
+            <ProtectedRoute roles={["manufacturer"]}>
+              <EmployeeLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<Dashboard />} />
+          {/* Add more manufacturer-specific routes here */}
+        </Route>
+
+        {/* Errors */}
+        {/* <Route path="/unauthorized" element={<UnauthorizedPage />} />
+        <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </BrowserRouter>
   );

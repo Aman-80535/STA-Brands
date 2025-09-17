@@ -178,6 +178,10 @@ const Dashboard = () => {
 											return <td><img style={{ width: "20px", cursor: "pointer" }} src={Eye} onClick={() => navigate(`/view-product/${order?.productId}`)} /></td>
 
 										}
+										else if (col.key === "ordersList") {
+											return <td><img style={{ width: "20px", cursor: "pointer" }} src={Eye} onClick={() => navigate(`/view-batch-product/${order?.batch_id}`)} /></td>
+
+										}
 										else {
 											return <td key={col.key} className="p-3">{col.key === "created_at" ? getFromToDateForBacth(order[col.key]) : order[col.key]}</td>;
 										}

@@ -1,10 +1,12 @@
 export const manufacturerColumns = [
-  { label: "Batch ID", key: "batchId" },
-  { label: "Item ID", key: "itemId" },
-  { label: "Date", key: "date" },
+  { label: "Batch ID", key: "batch_id" },
+  { label: "Item ID", key: "productId" },
+  { label: "Date", key: "created_at" },
+  { label: "Qty", key: "sizing_breakdown" },
   { label: "View Image", key: "image" },
-  { label: "Qty", key: "quantity" },
-  { label: "Action", key: "action", isAction: true }
+  { label: "status", key: "status" },
+  { label: "Action", key: "action" ,isAction: true},
+  { label: "Orders List", key: "ordersList",  },
 ];
 
 export const adminColumns = [
@@ -14,7 +16,8 @@ export const adminColumns = [
   { label: "Qty", key: "sizing_breakdown" },
   { label: "View Image", key: "image" },
   { label: "status", key: "status" },
-  { label: "Action", key: "action", isAction: true }
+  { label: "Action", key: "action" ,isAction: true},
+  { label: "Orders List", key: "ordersList",  },
 ];
 
 

@@ -15,7 +15,10 @@ const LoginForm = () => {
 
 		try {
 			await signInWithEmailAndPassword(auth, email, password);
-			navigate('/')
+			setTimeout(() => {
+				navigate("/");
+			}
+				, 700);
 			console.log("✅ Login successful");
 		} catch (err) {
 			console.error("Login error:", err.message);

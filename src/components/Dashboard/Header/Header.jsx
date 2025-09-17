@@ -1,11 +1,19 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { navLinks } from "../../../common";
+import { logout } from "../../../services/auth";
+import { useAuth } from "../../../context/AuthContext";
 
 const Header = () => {
+	const navigate = useNavigate();
+	const { role } = useAuth();
+	const handleLogout = async () => {
+		await logout();
+		navigate("/login");
+	};
+
 	return (
 		<header>
-			{/* Navigation bar */}
 			<nav className="relative flex w-full items-center justify-between bg-white py-2 shadow-md dark:bg-gray-900 lg:flex-wrap lg:justify-start lg:py-4">
 				<div className="flex w-full flex-wrap items-center justify-between px-3">
 					{/* Hamburger */}
@@ -31,10 +39,10 @@ const Header = () => {
 							{navLinks.map(({ label, path }) => (
 								<li key={path} className="mb-4 lg:mb-0 lg:pe-2">
 									<NavLink
-										to={path}
+										to={`${role === "admin" ? "/admin" : "/manufacturer"}${path}`}
 										className={({ isActive }) =>
 											`block transition duration-200 lg:px-2 
-                ${isActive
+											${isActive
 												? "text-black dark:text-white font-semibold"
 												: "text-gray-600 hover:text-black dark:text-white/60 dark:hover:text-white/80"
 											}`
@@ -44,12 +52,20 @@ const Header = () => {
 									</NavLink>
 								</li>
 							))}
+
+							{/* Logout button styled like NavLink */}
+							<li className="mb-4 lg:mb-0 lg:pe-2">
+								<button
+									onClick={handleLogout}
+									className="block w-full transition duration-200 lg:px-2 text-gray-600 hover:text-black dark:text-white/60 dark:hover:text-white/80"
+								>
+									Log Out
+								</button>
+							</li>
 						</ul>
 					</div>
 				</div>
 			</nav>
-
-
 		</header>
 	);
 };

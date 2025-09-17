@@ -49,3 +49,28 @@ export const getBatchedOrders = async () => {
     ...doc.data(),
   }));
 };
+
+
+export const fetchOrdersByBatchId = async (batchId) => {
+  try {
+    const q = query(collection(db, 'orders'), where('batch_id', '==', batchId));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      console.log('No orders found for this batch.');
+      return [];
+    }
+
+    const orders = querySnapshot.docs.map(doc => ({
+      id: doc.id, // Firestore document ID (order_id)
+      ...doc.data()
+    }));
+
+    console.log('Orders for batch:', batchId, orders);
+    return orders;
+
+  } catch (error) {
+    console.error('Error fetching orders by batchId:', error);
+    throw error;
+  }
+};

@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   fetchSignInMethodsForEmail,
+  signOut,
 } from "firebase/auth";
 import {
   doc,
@@ -14,7 +15,7 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../firebase"; // adjust path as needed
 
-const createOrUpdateUser = async (form) => {
+export const createOrUpdateUser = async (form) => {
   const { email, name, password, role, phone } = form;
 
   try {
@@ -63,5 +64,15 @@ const createOrUpdateUser = async (form) => {
   } catch (error) {
     console.error("User creation error:", error.message);
     alert(error.message);
+  }
+};
+
+
+export const logout = async () => {
+  try {
+    await signOut(auth);
+    console.log("User signed out successfully.");
+  } catch (error) {
+    console.error("Error signing out:", error);
   }
 };

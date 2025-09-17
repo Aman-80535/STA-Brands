@@ -2,6 +2,7 @@ export const navLinks = [
   { label: "Home", path: "/" },
   { label: "Analytics", path: "/analytics" },
   { label: "Add New Product", path: "/add-product" },
+  { label: "Add New User", path: "/new-user" },
 ]
 
 

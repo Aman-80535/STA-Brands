@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebase";
+import { createOrUpdateUser } from "../../services/auth";
 
 const NewEmployeePage = () => {
   const [form, setForm] = useState({
@@ -23,26 +24,8 @@ const NewEmployeePage = () => {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     try {
-      // Create user in Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        form.email,
-        form.password
-      );
-      const uid = userCredential.user.uid;
-
-      // Save in Firestore
-      const employeeRef = doc(db, "employees", uid);
-      await setDoc(employeeRef, {
-        uid,
-        name: form.name,
-        email: form.email,
-        phone: form.phone,
-        role: form.role,
-        created_at: serverTimestamp(),
-      });
+      await createOrUpdateUser(form)
 
       alert("✅ Employee created successfully!");
       setForm({ name: "", email: "", password: "", role: "manufacturer", phone: "" });
@@ -110,9 +93,8 @@ const NewEmployeePage = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200 ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200 ${loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
           >
             {loading ? "Creating..." : "Create Employee"}
           </button>
